@@ -1,6 +1,6 @@
 {
   "name": "@qiqi1996/qi-rollup-dev",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Useful presets and tools for rollup.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

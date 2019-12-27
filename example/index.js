@@ -6,9 +6,20 @@ const dev = new QiRollupDev({
     output: __dirname + "/dist/index.js"
 });
 
-dev.presets.formats("cjs", "esm")
+dev.presets.formats("cjs", "esm");
+
 dev.watch({
     callback(evt) {
-        console.log(evt);
+        if (evt.code == "ERROR") {
+            console.error(evt);
+            return;
+        }
+        if (evt.code == "END") {
+            // Delete the require cache of NodeJS when `rollup` finish rebuild, and then reload the example/test code.
+            // So that you will get the ability of hot-reload for NodeJS development.
+            // Try to start up this example code and modify the `src/index.js` and see what will happen.
+            dev.clearCache(__dirname);
+            require("./example.js");
+        }
     }
 });

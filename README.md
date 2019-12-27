@@ -1,6 +1,8 @@
 # Qi Rollup Dev
 
-Provide useful preset configs and tool functions for rollup. **This project is experimental, use at your own risk if you'd like use it for production purpose.**
+Provide useful preset configs and tool functions for `rollup`, just like a start-up template but with more controllability. The main goal of this project is reduce the time for design development environment.
+
+**NOTICE: This project is experimental, use at your own risk if you'd like use it for production purpose.**
 
 ## Features
 
@@ -9,7 +11,6 @@ Provide useful preset configs and tool functions for rollup. **This project is e
 ## Todo
 
 * Add preset for `typescript`
-
 
 ## Useage
 
@@ -29,8 +30,9 @@ var dev = new QiRollupDev({ name: "LibraryName", input: "/path/to/entry.js", out
 // It will generate 3 files at last, which are `output.js(CommonJS, cause it's the first argument)`, `output.cjs.js(CommonJS)`, `output.esm.js(ESModule)`.
 dev.presets.formats("cjs", "esm");
 
-// You can check final config of rollup by this:
-console.log(dev.config);
+// You can check(or modify) the final config of rollup by this:
+// dev.config.plugins = [ babel(), strip(), ... ]
+// console.log(dev.config);
 
 // Auto rebuild when code changed. For `evt` object, see: http://rollupjs.org/guide/en/#rollupwatch
 dev.watch({ callback: (evt) => { "Do something..." } });
@@ -38,6 +40,10 @@ dev.watch({ callback: (evt) => { "Do something..." } });
 // Bundle up the whole project.
 dev.build();
 ```
+
+### More Cases
+
+See example code [Go→](./example/)
 
 ## License
 

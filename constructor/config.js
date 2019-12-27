@@ -19,6 +19,8 @@ const output = [{
     }
 ]
 
+const external = ["rollup", "path", "lodash", "validate"]
+
 const plugins = [
     babel(),
     strip()
@@ -27,5 +29,6 @@ const plugins = [
 export default {
     input: path.resolve(common.path.SOURCE, "index.js"),
     output,
+    external,
     plugins
 }
