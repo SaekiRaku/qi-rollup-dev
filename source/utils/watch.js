@@ -4,7 +4,7 @@ import {
     watch
 } from "rollup";
 
-export default function (options) {
+export default function (options = {}) {
     let basic = this.basic;
     let config = this.config;
 

@@ -159,7 +159,7 @@ function clearCache (...paths) {
   }
 }
 
-function watch (options) {
+function watch (options = {}) {
   let basic = this.basic;
   let config = this.config;
   let v = new validate({
