@@ -15,6 +15,8 @@ dev.presets.formats("cjs", "esm").cli();
 console.log(dev.config);
 
 dev.watch({
+    extra: __dirname,
+    // this property can add extra files or directory(recursive) to be watched
     callback(evt) {
         if (evt.code == "ERROR") {
             console.error(evt);

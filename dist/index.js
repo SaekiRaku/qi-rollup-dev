@@ -6,6 +6,7 @@ var path = _interopDefault(require('path'));
 var _ = _interopDefault(require('lodash'));
 var validate = _interopDefault(require('validate'));
 var rollup = require('rollup');
+var fs = _interopDefault(require('fs'));
 
 function cli (options = {}) {
   let _options = _.merge(options, {
@@ -164,6 +165,7 @@ function clearCache (...paths) {
 }
 
 function watch (options = {}) {
+  options = _.cloneDeep(options);
   let basic = this.basic;
   let config = this.config;
   let v = new validate({
@@ -179,8 +181,51 @@ function watch (options = {}) {
 
   let watcher = rollup.watch(config);
   watcher.on("event", evt => {
-    options.callback && options.callback(evt);
+    var _options$callback, _options;
+
+    (_options$callback = (_options = options).callback) === null || _options$callback === void 0 ? void 0 : _options$callback.call(_options, evt);
   });
+  let fswatcher = [];
+
+  if (options.extra) {
+    if (typeof options.extra == "function") {
+      options.extra = options.extra();
+    }
+
+    if (typeof options.extra == "string") {
+      options.extra = [options.extra];
+    }
+
+    if (Array.isArray(options.extra)) {
+      for (let i in options.extra) {
+        let ext = options.extra[i];
+
+        if (typeof ext == "function") {
+          ext = ext();
+        }
+
+        if (typeof ext == "string") {
+          fswatcher.push(fs.watch(ext, {
+            recursive: true
+          }, () => {
+            var _options$callback2, _options2;
+
+            (_options$callback2 = (_options2 = options).callback) === null || _options$callback2 === void 0 ? void 0 : _options$callback2.call(_options2, {
+              code: "END"
+            });
+          }));
+        }
+      }
+    }
+  }
+
+  return () => {
+    watcher.close();
+
+    for (let i in fswatcher) {
+      fswatcher[i].close();
+    }
+  };
 }
 
 // QI-AUTO-EXPORT

@@ -19,7 +19,7 @@ const output = [{
     }
 ]
 
-const external = ["rollup", "path", "lodash", "validate"]
+const external = ["rollup", "fs", "path", "lodash", "validate"]
 
 const plugins = [
     babel(),
